@@ -1,0 +1,31 @@
+<!-- <svg viewbox="0 0 400 400" id="text-filter" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <filter id="myfilter">
+      <feTurbulence
+        baseFrequency=".028,.009"
+        type="fractalNoise"
+        numOctaves="1"
+        seed="100"
+        result="texture1"
+      />
+      <feImage id="grunge" xlink:href="/grunge.jpg" x="0" y="0" width="397" height="87" result="mask" />
+      <feColorMatrix type="saturate" values="0" />
+      <feComposite operator="in" in="SourceGraphic" in2="texture1" />
+    </filter>
+  </defs>
+
+  <text filter="url(#myfilter)" x="0" y="30%" font-family="Roboto Condensed" letter-spacing="-1" font-size="50" fill="orange">FRONTENDNAGOYA#10</text>
+</svg> -->
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <filter id="blurlayer" width="110%" height="100%">
+      <feImage id="feimage" xlink:href="/grunge.jpg" x="0" y="0" height="300px" result="mask" />
+      <feBlend in="SourceGraphic" in2="mask" mode="multiply"/>
+    </filter>
+  </defs>
+  <g filter="url(#blurlayer)" fill="transparent">
+    <rect x="0" y="0" width="100%" height="100%" fill="#000" />
+    <text x="30%" y="100" font-family="Roboto Condensed" letter-spacing="-1" font-size="80" fill="#fff">FRONTENDNAGOYA#10</text>
+  </g>
+</svg>
