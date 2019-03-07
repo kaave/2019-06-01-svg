@@ -71,7 +71,10 @@
   },
   "dependencies": {
     "date-fns": "^1.30.1",
+    "js-beautify": "^1.9.0",
     "lodash-es": "^4.17.11",
+    "prism-themes": "^1.0.1",
+    "prismjs": "^1.15.0",
     "react": "^16.8.4",
     "react-dom": "^16.8.4",
     "rxjs": "^6.4.0",
@@ -80,6 +83,8 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.6",
+    "@types/js-beautify": "^1.8.0",
+    "@types/prismjs": "^1.9.1",
     "@types/react": "^16.8.6",
     "@types/react-dom": "^16.8.2",
     "@typescript-eslint/eslint-plugin": "^1.4.1",

@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { html_beautify as htmlBeautify } from 'js-beautify';
 
 import { execCopy } from '../modules/execCopy';
 import { Svg } from '../components/Svg';
@@ -14,7 +15,7 @@ export const App: React.FC<{}> = () => {
       return;
     }
 
-    execCopy(svgRef.current.outerHTML);
+    execCopy(svgCode);
   };
 
   React.useEffect(() => {
@@ -22,7 +23,7 @@ export const App: React.FC<{}> = () => {
       return;
     }
 
-    setSvgCode(svgRef.current.outerHTML);
+    setSvgCode(htmlBeautify(svgRef.current.outerHTML));
   });
 
   return (
