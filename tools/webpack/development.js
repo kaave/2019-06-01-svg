@@ -40,6 +40,7 @@ module.exports = {
   plugins: [
     ...plugins,
     new webpack.NamedModulesPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
     new ForkTsCheckerWebpackPlugin(),
   ],
   module: {

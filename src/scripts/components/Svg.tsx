@@ -5,12 +5,14 @@ import { SvgBody } from './SvgBody';
 
 export interface Props {
   text: string;
+  width?: number;
+  height?: number;
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const Svg: React.FC<Props> = ({ text, svgRef }) => {
-  const width = 397;
-  const height = 59;
+export const Svg: React.FC<Props> = ({ text, width, height, svgRef }) => {
+  const svgWidth = width || 40 * text.length; // 雑
+  const svgHeight = height || 59;
 
   return (
     <svg
@@ -18,9 +20,9 @@ export const Svg: React.FC<Props> = ({ text, svgRef }) => {
       ref={svgRef}
       xmlns="http://www.w3.org/2000/svg"
       xmlnsXlink="http://www.w3.org/1999/xlink"
-      width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
+      width={svgWidth}
+      height={svgHeight}
+      viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       enableBackground="new"
     >
       <SvgDefs />
