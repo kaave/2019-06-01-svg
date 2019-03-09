@@ -39,7 +39,9 @@ export const App: React.FC<{}> = () => {
 
   return (
     <main id="main" className="Main" role="main">
-      <Svg svgRef={svgRef} />
+      <figure className="Svg__parent">
+        <Svg svgRef={svgRef} text="ILVFRTED" />
+      </figure>
       <Code code={svgCode} />
       <Menu dispatch={onClickDispatch} />
     </main>
