@@ -15,7 +15,7 @@ module.exports = {
     },
     // sourceType: 'module',
     project: './tsconfig.json',
-    extraFileExtensions: ['.vue'],
+    extraFileExtensions: ['.vue', '.ts', '.tsx'],
   },
   env: {
     browser: true,
