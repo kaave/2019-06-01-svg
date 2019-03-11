@@ -5,14 +5,23 @@ import { SvgBody } from './SvgBody';
 
 export interface Props {
   text: string;
+  fontSize: number;
   width?: number;
   height?: number;
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const Svg: React.FC<Props> = ({ text, width, height, svgRef }) => {
-  const svgWidth = width || 40 * text.length; // 雑
-  const svgHeight = height || 59;
+export const Svg: React.FC<Props> = ({ text, fontSize, width, svgRef }) => {
+  const texts = text.split('\n');
+  const svgWidth =
+    width ||
+    42 *
+      texts
+        .map(t => t.length)
+        .sort()
+        .reverse()[0]; // 雑
+  // const svgHeight = height || 59;
+  const svgHeight = fontSize * texts.length;
 
   return (
     <svg
@@ -26,7 +35,7 @@ export const Svg: React.FC<Props> = ({ text, width, height, svgRef }) => {
       enableBackground="new"
     >
       <SvgDefs />
-      <SvgBody text={text} />
+      <SvgBody texts={texts} fontSize={fontSize} />
     </svg>
   );
 };

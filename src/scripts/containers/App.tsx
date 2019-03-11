@@ -3,7 +3,7 @@ import { html_beautify as htmlBeautify } from 'js-beautify';
 
 import { execCopy } from '../modules/execCopy';
 import { svg2png } from '../modules/svg2png';
-import { Svg } from '../components/Svg';
+import { Svg, Props as SvgProps } from '../components/Svg';
 import { Code } from '../components/Code';
 import { Menu } from '../components/Menu';
 
@@ -12,6 +12,14 @@ export type MenuDispatch = 'copy' | 'png';
 export const App: React.FC<{}> = () => {
   const [svgCode, setSvgCode] = React.useState('');
   const svgRef = React.useRef<SVGSVGElement>(null);
+  const svgProps: SvgProps = {
+    svgRef,
+    text: `
+ILOVEWEB
+FRONTEND
+`.trim(),
+    fontSize: 75,
+  };
 
   const onClickDispatch = async (e: React.MouseEvent<HTMLButtonElement>) => {
     const action = e.currentTarget.value as MenuDispatch;
@@ -40,7 +48,7 @@ export const App: React.FC<{}> = () => {
   return (
     <main id="main" className="Main" role="main">
       <figure className="Svg__parent">
-        <Svg svgRef={svgRef} text="ILVFRTED" />
+        <Svg {...svgProps} />
       </figure>
       <Code code={svgCode} />
       <Menu dispatch={onClickDispatch} />
