@@ -11,6 +11,7 @@ export const Code: React.FC<Props> = ({ code }) => {
 
   return (
     <pre className="Code language-xml">
+      {/* eslint-disable-next-line react/no-danger */}
       <code className="language-xml" dangerouslySetInnerHTML={{ __html }} />
     </pre>
   );

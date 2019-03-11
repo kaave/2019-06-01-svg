@@ -22,9 +22,9 @@ export const SvgBody: React.FC<Props> = ({ text }) => (
         <tspan>{text}</tspan>
       </text>
       <g className="strokes" strokeWidth="0.3">
-        {dasharrays.map(([da1, da2, os], i) => (
+        {dasharrays.map(([da1, da2, os]) => (
           <text
-            key={i}
+            key={`${da1} ${da2} ${os}`}
             {...fontOptions}
             fill="none"
             stroke="url(#text-color)"
