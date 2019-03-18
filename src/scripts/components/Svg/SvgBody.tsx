@@ -9,9 +9,11 @@ const fontOptions: React.SVGProps<SVGTextElement> = {
   x: 0,
   y: '1em',
   fontFamily: 'Roboto Condensed',
+  // fontFamily: 'sans-serif',
   fontWeight: 700,
   letterSpacing: -1,
-  fill: '#330',
+  fill: '#000',
+  filter: 'url(#drop-shadow)',
 };
 const lineHeight = 0.8;
 const styles: React.CSSProperties = {};
