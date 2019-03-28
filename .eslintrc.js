@@ -54,5 +54,6 @@ module.exports = {
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     // 関数の戻り値を強制 無効化 voidのみ無効にできたら有効にしたいができないので全部OFF
     '@typescript-eslint/explicit-function-return-type': 'off',
+    '@typescript-eslint/prefer-interface': 'off',
   },
 };

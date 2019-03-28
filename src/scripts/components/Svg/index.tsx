@@ -11,7 +11,7 @@ export interface Props {
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const Svg: React.FC<Props> = ({ text, fontSize, width, svgRef }) => {
+export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef }) => {
   const texts = text.split('\n');
   const svgWidth =
     width ||
@@ -21,7 +21,7 @@ export const Svg: React.FC<Props> = ({ text, fontSize, width, svgRef }) => {
         .sort()
         .reverse()[0]; // 雑
   // const svgHeight = height || 59;
-  const svgHeight = fontSize * texts.length;
+  const svgHeight = height || fontSize * texts.length;
 
   return (
     <svg
@@ -34,8 +34,8 @@ export const Svg: React.FC<Props> = ({ text, fontSize, width, svgRef }) => {
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       enableBackground="new"
     >
-      <SvgDefs />
-      <SvgBody texts={texts} fontSize={fontSize} />
+      <SvgDefs width={svgWidth} height={svgHeight} />
+      <SvgBody texts={texts} fontSize={fontSize} width={svgWidth} />
     </svg>
   );
 };

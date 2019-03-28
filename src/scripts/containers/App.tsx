@@ -14,11 +14,10 @@ export const App: React.FC<{}> = () => {
   const svgRef = React.useRef<SVGSVGElement>(null);
   const svgProps: SvgProps = {
     svgRef,
-    text: `
-ILOVEWEB
-FRONTEND
-`.trim(),
+    text: '#FRONTEND758',
     fontSize: 75,
+    width: 428.09,
+    height: 88,
   };
 
   const onClickDispatch = async (e: React.MouseEvent<HTMLButtonElement>) => {

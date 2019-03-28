@@ -3,6 +3,7 @@ import * as React from 'react';
 export interface Props {
   texts: string[];
   fontSize: number;
+  width: number;
 }
 
 const fontOptions: React.SVGProps<SVGTextElement> = {
@@ -11,19 +12,18 @@ const fontOptions: React.SVGProps<SVGTextElement> = {
   fontFamily: 'Roboto Condensed',
   // fontFamily: 'sans-serif',
   fontWeight: 700,
-  letterSpacing: -1,
-  fill: '#000',
-  filter: 'url(#drop-shadow)',
+  // fill: '#fff',
+  fill: 'url(#text-color)',
+  width: '100%',
 };
-const lineHeight = 0.8;
 const styles: React.CSSProperties = {};
 
-export const SvgBody: React.FC<Props> = ({ texts, fontSize }) => (
-  <text fontSize={fontSize} {...fontOptions} style={styles}>
-    {texts.map((t, i) => (
-      <tspan key={t} x={0} dy={`${lineHeight * (i === 0 ? 0 : 1)}em`}>
-        {t}
-      </tspan>
-    ))}
-  </text>
+export const SvgBody: React.FC<Props> = ({ texts, fontSize, width }) => (
+  <g filter="url(#drop-shadow)">
+    <g clipPath="url(#text-helmet)">
+      <text fontSize={fontSize} {...fontOptions} style={styles} textLength={width} lengthAdjust="spacingAndGlyphs">
+        {texts}
+      </text>
+    </g>
+  </g>
 );
