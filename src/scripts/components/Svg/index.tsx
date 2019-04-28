@@ -8,11 +8,12 @@ export interface Props {
   fontSize: number;
   width?: number;
   height?: number;
+  isGradient: boolean;
   lengthAdjust: string;
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, lengthAdjust }) => {
+export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, isGradient, lengthAdjust }) => {
   const texts = text.split('\n');
   const svgWidth =
     width ||
@@ -36,7 +37,7 @@ export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, le
       enableBackground="new"
     >
       <SvgDefs width={svgWidth} height={svgHeight} />
-      <SvgBody texts={texts} fontSize={fontSize} width={svgWidth} lengthAdjust={lengthAdjust} />
+      <SvgBody texts={texts} fontSize={fontSize} width={svgWidth} isGradient={isGradient} lengthAdjust={lengthAdjust} />
     </svg>
   );
 };

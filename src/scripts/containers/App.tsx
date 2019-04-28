@@ -13,6 +13,7 @@ export type MenuDispatch = 'copy' | 'png';
 export const App: React.FC<{}> = () => {
   const [text, setText] = React.useState('HELLO, SVG');
   const [width, setWidth] = React.useState(250);
+  const [isGradient, setIsGradient] = React.useState(false);
   const [lengthAdjust, setLengthAdjust] = React.useState('spacing');
   const [svgCode, setSvgCode] = React.useState('');
   const svgRef = React.useRef<SVGSVGElement>(null);
@@ -20,6 +21,7 @@ export const App: React.FC<{}> = () => {
     svgRef,
     text,
     lengthAdjust,
+    isGradient,
     fontSize: 75,
     width,
     height: 88,
@@ -59,7 +61,7 @@ export const App: React.FC<{}> = () => {
       <dg.GUI>
         <dg.Text label="Text" value={text} onChange={(s: string) => setText(s)} />
         <dg.Number label="Width" value={width} min={50} max={2000} step={25} onChange={(n: number) => setWidth(n)} />
-        <dg.Checkbox label="Checkbox" checked />
+        <dg.Checkbox label="Gradient" onChange={(b: boolean) => setIsGradient(b)} />
         <dg.Select
           label="lengthAdjust"
           value={lengthAdjust}
@@ -67,7 +69,6 @@ export const App: React.FC<{}> = () => {
           onChange={(s: string) => setLengthAdjust(s)}
         />
         <dg.Button label="Button" />
-        <dg.Gradient label="Gradient" expanded />
       </dg.GUI>
     </main>
   );
