@@ -19,11 +19,9 @@ const fontOptions: React.SVGProps<SVGTextElement> = {
 };
 const styles: React.CSSProperties = {};
 
-// <g filter="url(#drop-shadow)">
-//   <g clipPath="url(#text-helmet)">
 export const SvgBody: React.FC<Props> = ({ texts, fontSize, width, lengthAdjust }) => (
   <g filter="url(#drop-shadow)">
-    <g>
+    <g clipPath="url(#text-helmet)">
       <text fontSize={fontSize} {...fontOptions} style={styles} textLength={width} lengthAdjust={lengthAdjust}>
         {texts}
       </text>

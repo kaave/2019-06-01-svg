@@ -12,6 +12,7 @@ export type MenuDispatch = 'copy' | 'png';
 
 export const App: React.FC<{}> = () => {
   const [text, setText] = React.useState('HELLO, SVG');
+  const [width, setWidth] = React.useState(250);
   const [lengthAdjust, setLengthAdjust] = React.useState('spacing');
   const [svgCode, setSvgCode] = React.useState('');
   const svgRef = React.useRef<SVGSVGElement>(null);
@@ -20,7 +21,7 @@ export const App: React.FC<{}> = () => {
     text,
     lengthAdjust,
     fontSize: 75,
-    width: 428.09,
+    width,
     height: 88,
   };
 
@@ -57,7 +58,7 @@ export const App: React.FC<{}> = () => {
       <Menu dispatch={onClickDispatch} />
       <dg.GUI>
         <dg.Text label="Text" value={text} onChange={(s: string) => setText(s)} />
-        <dg.Number label="Range" value={512} min={-1024} max={1024} step={64} />
+        <dg.Number label="Width" value={width} min={50} max={2000} step={25} onChange={(n: number) => setWidth(n)} />
         <dg.Checkbox label="Checkbox" checked />
         <dg.Select
           label="lengthAdjust"
@@ -66,10 +67,7 @@ export const App: React.FC<{}> = () => {
           onChange={(s: string) => setLengthAdjust(s)}
         />
         <dg.Button label="Button" />
-        <dg.Folder label="Filter configs" expanded>
-          <dg.Text label="Text" value="Hello folder!" />
-          <dg.Gradient label="Gradient" expanded />
-        </dg.Folder>
+        <dg.Gradient label="Gradient" expanded />
       </dg.GUI>
     </main>
   );
