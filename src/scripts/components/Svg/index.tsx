@@ -9,11 +9,23 @@ export interface Props {
   width?: number;
   height?: number;
   isGradient: boolean;
+  cut: number;
   lengthAdjust: string;
+  turbulenceFrequency: number;
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, isGradient, lengthAdjust }) => {
+export const Svg: React.FC<Props> = ({
+  text,
+  fontSize,
+  height,
+  width,
+  svgRef,
+  isGradient,
+  cut,
+  lengthAdjust,
+  turbulenceFrequency,
+}) => {
   const texts = text.split('\n');
   const svgWidth =
     width ||
@@ -36,7 +48,7 @@ export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, is
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       enableBackground="new"
     >
-      <SvgDefs width={svgWidth} height={svgHeight} />
+      <SvgDefs width={svgWidth} height={svgHeight} turbulenceFrequency={turbulenceFrequency} cut={cut} />
       <SvgBody texts={texts} fontSize={fontSize} width={svgWidth} isGradient={isGradient} lengthAdjust={lengthAdjust} />
     </svg>
   );

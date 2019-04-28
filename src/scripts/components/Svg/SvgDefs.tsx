@@ -3,9 +3,11 @@ import * as React from 'react';
 export type Props = {
   width: number;
   height: number;
+  cut: number;
+  turbulenceFrequency: number;
 };
 
-export const SvgDefs: React.FC<Props> = ({ width, height }) => (
+export const SvgDefs: React.FC<Props> = ({ width, height, cut, turbulenceFrequency }) => (
   <defs>
     <linearGradient id="text-color">
       <stop offset="0.2" stopColor="#f0f">
@@ -16,13 +18,13 @@ export const SvgDefs: React.FC<Props> = ({ width, height }) => (
       </stop>
     </linearGradient>
     <clipPath id="text-helmet">
-      <rect x="0" y="27%" width="100%" height="70%" />
+      <rect x="0" y={`${cut}%`} width="100%" height={`${100 - cut}%`} />
     </clipPath>
     <filter id="drop-shadow">
       <feTurbulence
         type="turbulence"
-        baseFrequency="10.995"
-        numOctaves="1"
+        baseFrequency={turbulenceFrequency}
+        numOctaves={2}
         stitchTiles="noStitch"
         result="glitch-texture"
       />
