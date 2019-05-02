@@ -19,12 +19,12 @@ const fontOptions: React.SVGProps<SVGTextElement> = {
 const styles: React.CSSProperties = {};
 
 export const SvgBody: React.FC<Props> = ({ texts, fontSize, width, isGradient, lengthAdjust }) => (
-  <g filter="url(#drop-shadow)">
+  <g filter="url(#text-glitch)" mask="url(#mask-grunge)">
     <g clipPath="url(#text-helmet)">
       <text
         fontSize={fontSize}
         {...fontOptions}
-        fill={isGradient ? 'url(#text-color)' : '#fff'}
+        fill={isGradient ? 'url(#text-color)' : '#000'}
         style={styles}
         textLength={width}
         lengthAdjust={lengthAdjust}

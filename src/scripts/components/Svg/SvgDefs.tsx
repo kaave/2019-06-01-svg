@@ -20,11 +20,10 @@ export const SvgDefs: React.FC<Props> = ({ width, height, cut, turbulenceFrequen
     <clipPath id="text-helmet">
       <rect x="0" y={`${cut}%`} width="100%" height={`${100 - cut}%`} />
     </clipPath>
-    <filter id="drop-shadow">
+    <filter id="text-glitch">
       <feTurbulence
         type="turbulence"
         baseFrequency={turbulenceFrequency}
-        numOctaves={2}
         stitchTiles="noStitch"
         result="glitch-texture"
       />
@@ -53,23 +52,38 @@ export const SvgDefs: React.FC<Props> = ({ width, height, cut, turbulenceFrequen
       <feColorMatrix
         in="blend-noise"
         type="matrix"
-        values=".1   0   0   0   0
-                 0  .1   0   0   0
-                 0   0  .1   0   0
-                 0   0   0   1   0 "
+        values=".1  0  0  0  0
+                 0 .1  0  0  0
+                 0  0 .1  0  0
+                 0  0  0  1  0"
         result="darken-noise"
       /> */}
 
-      <feComposite operator="in" in="darken-noise" in2="glitch" result="text" />
+      <feComposite operator="in" in="darken-noise" in2="glitch" result="noise-text" />
 
       <feImage id="grunge" xlinkHref="/grunge.jpg" x="0" y="0" width={width} height={height} result="mask" />
-      <feBlend mode="multiply" in="text" in2="mask" result="blend" />
+      <feBlend mode="multiply" in="noise-text" in2="mask" result="blend" />
       <feComposite operator="in" in="brend" in2="glitch" result="texture-text" />
 
       <feMerge>
-        <feMergeNode in="texture-text" />
-        {/* <feMergeNode in="text" /> */}
+        {/* <feMergeNode in="texture-text" /> */}
+        {/* <feMergeNode in="glitch" /> */}
+        <feMergeNode in="noise-text" />
       </feMerge>
     </filter>
+    <filter id="invert">
+      <feComponentTransfer in="SourceGraphic">
+        <feFuncR type="table" tableValues="1 0" />
+        <feFuncG type="table" tableValues="1 0" />
+        <feFuncB type="table" tableValues="1 0" />
+        <feFuncA type="identity" />
+      </feComponentTransfer>
+    </filter>
+    <pattern id="pattern" width={width} height={height} patternUnits="userSpaceOnUse">
+      <image width={width} height={height} filter="url(#invert)" xlinkHref="/grunge.jpg" />
+    </pattern>
+    <mask id="mask-grunge" x="0" y="0" width="1" height="1">
+      <rect width="100%" height="100%" fill="url(#pattern)" />
+    </mask>
   </defs>
 );
