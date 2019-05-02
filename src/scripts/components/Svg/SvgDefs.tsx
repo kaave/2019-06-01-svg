@@ -5,10 +5,11 @@ export type Props = {
   height: number;
   cut: number;
   texture: false | string;
+  isTextureInvert: boolean;
   turbulenceFrequency: number;
 };
 
-export const SvgDefs: React.FC<Props> = ({ width, height, cut, texture, turbulenceFrequency }) => (
+export const SvgDefs: React.FC<Props> = ({ width, height, cut, texture, isTextureInvert, turbulenceFrequency }) => (
   <defs>
     <linearGradient id="text-color">
       <stop offset="0.2" stopColor="#f0f">
@@ -95,7 +96,14 @@ export const SvgDefs: React.FC<Props> = ({ width, height, cut, texture, turbulen
     {texture && (
       <>
         <pattern id="pattern" width={width} height={height} patternUnits="userSpaceOnUse">
-          <image width={width} height={height} filter="url(#invert)" xlinkHref={`/textures/${texture}.jpg`} />
+          <image
+            {...{
+              width,
+              height,
+              xlinkHref: `/textures/${texture}.jpg`,
+              ...(isTextureInvert ? { filter: 'url(#invert)' } : {}),
+            }}
+          />
         </pattern>
         <mask id="mask-grunge" x="0" y="0" width="1" height="1">
           <rect width="100%" height="100%" fill="url(#pattern)" />
