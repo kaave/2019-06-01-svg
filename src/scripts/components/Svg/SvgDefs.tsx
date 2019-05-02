@@ -4,10 +4,11 @@ export type Props = {
   width: number;
   height: number;
   cut: number;
+  texture: false | string;
   turbulenceFrequency: number;
 };
 
-export const SvgDefs: React.FC<Props> = ({ width, height, cut, turbulenceFrequency }) => (
+export const SvgDefs: React.FC<Props> = ({ width, height, cut, texture, turbulenceFrequency }) => (
   <defs>
     <linearGradient id="text-color">
       <stop offset="0.2" stopColor="#f0f">
@@ -61,8 +62,20 @@ export const SvgDefs: React.FC<Props> = ({ width, height, cut, turbulenceFrequen
 
       <feComposite operator="in" in="darken-noise" in2="glitch" result="noise-text" />
 
-      <feImage id="grunge" xlinkHref="/grunge.jpg" x="0" y="0" width={width} height={height} result="mask" />
-      <feBlend mode="multiply" in="noise-text" in2="mask" result="blend" />
+      {texture && (
+        <>
+          <feImage
+            id="grunge"
+            xlinkHref={`/textures/${texture}.jpg`}
+            x="0"
+            y="0"
+            width={width}
+            height={height}
+            result="mask"
+          />
+          <feBlend mode="multiply" in="noise-text" in2="mask" result="blend" />
+        </>
+      )}
       <feComposite operator="in" in="brend" in2="glitch" result="texture-text" />
 
       <feMerge>
@@ -79,11 +92,15 @@ export const SvgDefs: React.FC<Props> = ({ width, height, cut, turbulenceFrequen
         <feFuncA type="identity" />
       </feComponentTransfer>
     </filter>
-    <pattern id="pattern" width={width} height={height} patternUnits="userSpaceOnUse">
-      <image width={width} height={height} filter="url(#invert)" xlinkHref="/grunge.jpg" />
-    </pattern>
-    <mask id="mask-grunge" x="0" y="0" width="1" height="1">
-      <rect width="100%" height="100%" fill="url(#pattern)" />
-    </mask>
+    {texture && (
+      <>
+        <pattern id="pattern" width={width} height={height} patternUnits="userSpaceOnUse">
+          <image width={width} height={height} filter="url(#invert)" xlinkHref={`/textures/${texture}.jpg`} />
+        </pattern>
+        <mask id="mask-grunge" x="0" y="0" width="1" height="1">
+          <rect width="100%" height="100%" fill="url(#pattern)" />
+        </mask>
+      </>
+    )}
   </defs>
 );

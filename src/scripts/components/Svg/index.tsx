@@ -8,6 +8,7 @@ export interface Props {
   fontSize: number;
   width?: number;
   height?: number;
+  texture: false | string;
   isGradient: boolean;
   cut: number;
   lengthAdjust: string;
@@ -18,8 +19,9 @@ export interface Props {
 export const Svg: React.FC<Props> = ({
   text,
   fontSize,
-  height,
   width,
+  height,
+  texture,
   svgRef,
   isGradient,
   cut,
@@ -48,8 +50,21 @@ export const Svg: React.FC<Props> = ({
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       enableBackground="new"
     >
-      <SvgDefs width={svgWidth} height={svgHeight} turbulenceFrequency={turbulenceFrequency} cut={cut} />
-      <SvgBody texts={texts} fontSize={fontSize} width={svgWidth} isGradient={isGradient} lengthAdjust={lengthAdjust} />
+      <SvgDefs
+        width={svgWidth}
+        height={svgHeight}
+        turbulenceFrequency={turbulenceFrequency}
+        cut={cut}
+        texture={texture}
+      />
+      <SvgBody
+        texts={texts}
+        fontSize={fontSize}
+        width={svgWidth}
+        isGradient={isGradient}
+        lengthAdjust={lengthAdjust}
+        texture={texture}
+      />
     </svg>
   );
 };

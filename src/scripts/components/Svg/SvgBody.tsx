@@ -4,6 +4,7 @@ export interface Props {
   texts: string[];
   fontSize: number;
   width: number;
+  texture: false | string;
   isGradient: boolean;
   lengthAdjust: string;
 }
@@ -18,8 +19,8 @@ const fontOptions: React.SVGProps<SVGTextElement> = {
 };
 const styles: React.CSSProperties = {};
 
-export const SvgBody: React.FC<Props> = ({ texts, fontSize, width, isGradient, lengthAdjust }) => (
-  <g filter="url(#text-glitch)" mask="url(#mask-grunge)">
+export const SvgBody: React.FC<Props> = ({ texts, fontSize, width, texture, isGradient, lengthAdjust }) => (
+  <g filter="url(#text-glitch)" {...(texture ? { mask: 'url(#mask-grunge)' } : {})}>
     <g clipPath="url(#text-helmet)">
       <text
         fontSize={fontSize}

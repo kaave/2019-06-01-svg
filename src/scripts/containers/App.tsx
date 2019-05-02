@@ -13,6 +13,7 @@ export type LocalStorage = {
   text?: string;
   width?: number;
   height?: number;
+  texture?: string;
   damage?: number;
   cut?: number;
   isGradient?: boolean;
@@ -20,6 +21,17 @@ export type LocalStorage = {
 };
 
 const localStorageKey = 'FRONTENDNAGOYA_SVG_STATE';
+const textures = [
+  'abstract-paint',
+  'astronomy-dot',
+  'burned_paper',
+  'concrete-paint',
+  'dots',
+  'grunge',
+  'rust',
+  'stones',
+  'stratum',
+];
 
 const initialState = JSON.parse(localStorage.getItem(localStorageKey) || '{}') as LocalStorage;
 
@@ -27,6 +39,7 @@ export const App: React.FC<{}> = () => {
   const [text, setText] = React.useState(initialState.text || 'HELLO, SVG');
   const [width, setWidth] = React.useState(initialState.width || 250);
   const [height, setHeight] = React.useState(initialState.height || 88);
+  const [texture, setTexture] = React.useState(initialState.texture || 'none');
   const [damage, setDamage] = React.useState(initialState.damage || 0);
   const [cut, setCut] = React.useState(initialState.cut || 0);
   const [isGradient, setIsGradient] = React.useState(initialState.isGradient || false);
@@ -43,6 +56,7 @@ export const App: React.FC<{}> = () => {
     cut,
     width,
     height,
+    texture: texture === 'none' ? false : texture,
   };
 
   React.useEffect(() => {
@@ -63,6 +77,7 @@ export const App: React.FC<{}> = () => {
         <dg.Text label="Text" value={text} onChange={setText} />
         <dg.Number label="Width" value={width} min={50} max={2000} step={25} onChange={setWidth} />
         <dg.Number label="Height" value={height} min={10} max={200} step={2} onChange={setHeight} />
+        <dg.Select label="Texture" value={texture} options={textures} onChange={setTexture} />
         <dg.Number label="Damage" value={damage} min={0} max={1} step={0.005} onChange={setDamage} />
         <dg.Number label="Cut" value={cut} min={0} max={100} step={0.5} onChange={setCut} />
         <dg.Checkbox label="Gradient" checked={isGradient} onChange={setIsGradient} />
@@ -77,7 +92,7 @@ export const App: React.FC<{}> = () => {
           onClick={() =>
             localStorage.setItem(
               localStorageKey,
-              JSON.stringify({ text, width, damage, cut, isGradient, lengthAdjust }),
+              JSON.stringify({ text, width, height, texture, damage, cut, isGradient, lengthAdjust }),
             )
           }
         />
