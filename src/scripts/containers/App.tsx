@@ -14,6 +14,7 @@ export type LocalStorage = {
   width?: number;
   height?: number;
   texture?: string;
+  textureType?: string;
   isTextureInvert?: boolean;
   damage?: number;
   cut?: number;
@@ -43,6 +44,7 @@ export const App: React.FC<{}> = () => {
   const [width, setWidth] = React.useState(initialState.width || 250);
   const [height, setHeight] = React.useState(initialState.height || 88);
   const [texture, setTexture] = React.useState(initialState.texture || 'none');
+  const [textureType, setTextureType] = React.useState(initialState.textureType || '1');
   const [isTextureInvert, setIsTextureInvert] = React.useState(initialState.isTextureInvert || false);
   const [damage, setDamage] = React.useState(initialState.damage || 0);
   const [cut, setCut] = React.useState(initialState.cut || 0);
@@ -61,6 +63,7 @@ export const App: React.FC<{}> = () => {
     width,
     height,
     texture: texture === 'none' ? false : texture,
+    textureType: parseInt(textureType, 10),
     isTextureInvert,
   };
 
@@ -83,6 +86,7 @@ export const App: React.FC<{}> = () => {
         <dg.Number label="Width" value={width} min={50} max={2000} step={25} onChange={setWidth} />
         <dg.Number label="Height" value={height} min={10} max={200} step={2} onChange={setHeight} />
         <dg.Select label="Texture" value={texture} options={textures} onChange={setTexture} />
+        <dg.Select label="(type)" value={textureType} options={['1', '2']} onChange={setTextureType} />
         <dg.Checkbox label="(Invert)" checked={isTextureInvert} onChange={setIsTextureInvert} />
         <dg.Number label="Damage" value={damage} min={0} max={1} step={0.005} onChange={setDamage} />
         <dg.Number label="Cut" value={cut} min={0} max={100} step={0.5} onChange={setCut} />
@@ -98,7 +102,18 @@ export const App: React.FC<{}> = () => {
           onClick={() =>
             localStorage.setItem(
               localStorageKey,
-              JSON.stringify({ text, width, height, texture, isTextureInvert, damage, cut, isGradient, lengthAdjust }),
+              JSON.stringify({
+                text,
+                width,
+                height,
+                texture,
+                textureType,
+                isTextureInvert,
+                damage,
+                cut,
+                isGradient,
+                lengthAdjust,
+              }),
             )
           }
         />

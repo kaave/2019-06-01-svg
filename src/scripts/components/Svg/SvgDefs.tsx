@@ -5,11 +5,20 @@ export type Props = {
   height: number;
   cut: number;
   texture: false | string;
+  textureType: number;
   isTextureInvert: boolean;
   turbulenceFrequency: number;
 };
 
-export const SvgDefs: React.FC<Props> = ({ width, height, cut, texture, isTextureInvert, turbulenceFrequency }) => (
+export const SvgDefs: React.FC<Props> = ({
+  width,
+  height,
+  cut,
+  texture,
+  textureType,
+  isTextureInvert,
+  turbulenceFrequency,
+}) => (
   <defs>
     <linearGradient id="text-color">
       <stop offset="0.2" stopColor="#f0f">
@@ -80,9 +89,8 @@ export const SvgDefs: React.FC<Props> = ({ width, height, cut, texture, isTextur
       <feComposite operator="in" in="brend" in2="glitch" result="texture-text" />
 
       <feMerge>
-        {/* <feMergeNode in="texture-text" /> */}
         {/* <feMergeNode in="glitch" /> */}
-        <feMergeNode in="noise-text" />
+        <feMergeNode {...{ in: textureType === 1 ? 'noise-text' : 'texture-text' }} />
       </feMerge>
     </filter>
     <filter id="invert">

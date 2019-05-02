@@ -9,6 +9,7 @@ export interface Props {
   width?: number;
   height?: number;
   texture: false | string;
+  textureType: number;
   isTextureInvert: boolean;
   isGradient: boolean;
   cut: number;
@@ -23,6 +24,7 @@ export const Svg: React.FC<Props> = ({
   width,
   height,
   texture,
+  textureType,
   isTextureInvert,
   svgRef,
   isGradient,
@@ -41,6 +43,7 @@ export const Svg: React.FC<Props> = ({
   // const svgHeight = height || 59;
   const svgHeight = height || fontSize * texts.length;
 
+  console.log(textureType);
   return (
     <svg
       className="Output"
@@ -58,6 +61,7 @@ export const Svg: React.FC<Props> = ({
         turbulenceFrequency={turbulenceFrequency}
         cut={cut}
         texture={texture}
+        textureType={textureType}
         isTextureInvert={isTextureInvert}
       />
       <SvgBody
