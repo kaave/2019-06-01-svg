@@ -22,6 +22,7 @@ export type LocalStorage = {
 
 const localStorageKey = 'FRONTENDNAGOYA_SVG_STATE';
 const textures = [
+  'none',
   'abstract-paint',
   'astronomy-dot',
   'burned_paper',
