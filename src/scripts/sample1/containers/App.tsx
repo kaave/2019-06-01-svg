@@ -2,8 +2,8 @@ import * as React from 'react';
 import { html_beautify as htmlBeautify } from 'js-beautify';
 import * as dg from 'dis-gui';
 
-import { execCopy } from '../modules/execCopy';
-import { svg2png } from '../modules/svg2png';
+import { execCopy } from '../../modules/execCopy';
+import { svg2png } from '../../modules/svg2png';
 import { Svg, Props as SvgProps } from '../components/Svg';
 import { Code } from '../components/Code';
 
