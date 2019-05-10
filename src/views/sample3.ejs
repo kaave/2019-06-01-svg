@@ -1,0 +1,19 @@
+<%
+const config = {
+    title: 'top',
+    description: 'This is top page',
+    styles: ['https://fonts.googleapis.com/css?family=Roboto+Condensed:700', '/css/sample.css'],
+    scripts: [
+        'https://cdn.polyfill.io/v2/polyfill.js?features=default-3.3,Promise',
+        '/js/vendor.bundle.js',
+        '/js/sample3.js'
+    ],
+    metaImage: 'https://dummyimage.com/600x400/333/ddd.png&text=Dummy+image'
+};
+%>
+
+<%- include('./common/_head.ejs', { ...config }) %>
+
+<div id="mount-point"></div>
+
+<%- include('./common/_foot.ejs', { ...config }) %>

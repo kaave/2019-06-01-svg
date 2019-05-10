@@ -3,17 +3,22 @@ const config = {
     title: 'top',
     description: 'This is top page',
     styles: ['https://fonts.googleapis.com/css?family=Roboto+Condensed:700', '/css/index.css'],
-    scripts: [
-        'https://cdn.polyfill.io/v2/polyfill.js?features=default-3.3,Promise',
-        '/js/vendor.bundle.js',
-        '/js/index.js'
-    ],
+    scripts: [],
     metaImage: 'https://dummyimage.com/600x400/333/ddd.png&text=Dummy+image'
 };
 %>
 
 <%- include('./common/_head.ejs', { ...config }) %>
 
-<div id="mount-point"></div>
+<main id="main" class="Main" role="main">
+    <h1 class="Header">SVG typography</h1>
+    <ul class="Sample__list">
+    <% [['SVGで溶け文字', 'sample1.html'], ['SVGでテクスチャ', 'sample2.html'], ['SVGとWeb Audio API', 'sample3.html']].forEach(([desc, href]) => { %>
+        <li class="Sample__cell">
+            <a href="<%= href %>" class="Sample__link"><%= desc %></a>
+        </li>
+    <% }) %>
+    </ul>
+</main>
 
 <%- include('./common/_foot.ejs', { ...config }) %>

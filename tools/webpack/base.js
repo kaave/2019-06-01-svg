@@ -4,13 +4,9 @@ const globby = require('globby');
 
 const conf = require('../config');
 
-exports.entry = globby.sync([path.join(conf.path.scripts, '*.ts')])
-  .reduce((tmp, filepath) => {
-    tmp[path.basename(filepath, path.extname(filepath))] = filepath;
-    return tmp;
-  },
-  {},
-);
+exports.entry = globby
+  .sync([path.join(conf.path.scripts, '*.ts')])
+  .reduce((tmp, filepath) => ({ ...tmp, [path.basename(filepath, path.extname(filepath))]: filepath }), {});
 
 exports.output = {
   path: conf.path.dest.production,
@@ -64,5 +60,5 @@ exports.optimization = {
   splitChunks: {
     name: 'vendor.bundle',
     chunks: 'initial',
-  }
+  },
 };
