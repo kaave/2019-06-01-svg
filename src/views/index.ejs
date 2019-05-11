@@ -10,15 +10,76 @@ const config = {
 
 <%- include('./common/_head.ejs', { ...config }) %>
 
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="100"
+  height="100"
+  viewBox="0 0 100 100"
+  class="Background"
+  enable-background="new"
+  preserveAspectRatio="none"
+>
+  <defs>
+    <linearGradient id="e" x1="0" y1="0" x2="1" y2="0.7">
+      <stop offset=".2" stop-color="#cff">
+        <animate attributeName="stop-color" dur="4s" repeatCount="indefinite" values="#cff; #fc9; #fff; #fc9; #cff"/>
+      </stop>
+      <stop offset=".8" stop-color="#fc9">
+        <animate attributeName="stop-color" dur="4s" repeatCount="indefinite" values="#fc9; #fff; #cff; #fff; #fc9"/>
+      </stop>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="50" height="50" fill="url(#e)"></rect>
+  <rect x="-100" y="0" width="50" height="50" fill="url(#e)" transform="scale(-1,1)"></rect>
+  <rect x="0" y="-100" width="50" height="50" fill="url(#e)" transform="scale(1,-1)"></rect>
+  <rect x="-100" y="-100" width="50" height="50" fill="url(#e)" transform="scale(-1,-1)"></rect>
+</svg>
+
 <main id="main" class="Main" role="main">
-    <h1 class="Header">SVG typography</h1>
-    <ul class="Sample__list">
-    <% [['SVGで溶け文字', 'sample1.html'], ['SVGでテクスチャ', 'sample2.html'], ['SVGとWeb Audio API', 'sample3.html']].forEach(([desc, href]) => { %>
-        <li class="Sample__cell">
-            <a href="<%= href %>" class="Sample__link"><%= desc %></a>
-        </li>
-    <% }) %>
-    </ul>
+    <h1 class="Main__Header">
+        SVG Typography ~ 汚し系に挑戦 | SVG & Web Audio API<br>
+        2019/6/1 @ Frontend Nagoya #10
+    </h1>
+    <section class="CreatedItems">
+        <h2 class="CreatedItems__header">
+            制作物
+        </h2>
+        <ol class="CreatedItems__list">
+        <% [['SVGで溶け文字', 'sample1.html'], ['SVGでテクスチャ', 'sample2.html'], ['SVGとWeb Audio API', 'sample3.html']].forEach(([desc, href]) => { %>
+            <li class="CreatedItems__cell">
+                <a href="<%= href %>" class="CreatedItems__link" target="_blank" rel="noopener"><%= desc %></a>
+            </li>
+        <% }) %>
+        </ol>
+    </section>
+    <section class="Documents">
+        <h2 class="CreatedItems__header">
+            参考資料・素材など
+        </h2>
+        <ui class="Documents__list">
+        <% [
+            ['svg grunge mask & pattern', 'https://codepen.io/rdfriedl/pen/PPeZGa'],
+            ['SVG Levels Demo', 'https://codepen.io/airnan/pen/xgdRQB'],
+            ['表紙にぴったりな「溶け文字」の作り方！クリスタ・フォトショver', 'https://togetter.com/li/947614'],
+            ['SVG Color Filter Playground', 'https://kazzkiq.github.io/svg-color-filter/'],
+            ['⭐CREATIVE TYPOGRAPHY WITH SVG', 'http://talks.brennaobrien.com/svg-typography/#/'],
+            ['envy (Japan Band) OFFICIAL WEB SITE', 'http://envybandofficial.com/'],
+            ['Converge[Band] Album font', 'https://www.dafont.com/forum/read/117918/converge-band-album-font'],
+            ['Direttastadio 7Gold - (LECCE MILAN 3-4) BOA BOA BOA', 'https://www.youtube.com/watch?v=w2UsZRJk_GQ'],
+            ['ディレイ・リバーブ | エフェクター | WEB SOUNDER - Web Audio API 解説', 'https://weblike-curtaincall.ssl-lolipop.jp/portfolio-web-sounder/webaudioapi-effectors/delay-reverb'],
+            ['⭐svg要素の基本的な使い方まとめ', 'http://defghi1977.html.xdomain.jp/tech/svgMemo/svgMemo_11.htm'],
+            ['dis-gui', 'https://github.com/wwwtyro/dis-gui'],
+            ['Grunge Vectors, Photos and PSD files | Free Download', 'https://www.freepik.com/free-photos-vectors/grunge'],
+            ['Browse Popular All Time | DeviantArt', 'https://www.deviantart.com/popular-all-time/?section=&global=1&q=Grunge+Brushes&offset=24'],
+            ['⭐SVGエッセンシャルズ', 'https://www.oreilly.co.jp/books/9784873117973/']
+        ].forEach(([desc, href]) => { %>
+            <li class="Documents__cell">
+                <a href="<%= href %>" class="Documents__link" target="_blank" rel="noopener"><%= desc %></a>
+            </li>
+        <% }) %>
+        </ui>
+    </section>
 </main>
 
 <%- include('./common/_foot.ejs', { ...config }) %>
