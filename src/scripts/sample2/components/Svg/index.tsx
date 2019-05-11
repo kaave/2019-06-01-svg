@@ -8,12 +8,30 @@ export interface Props {
   fontSize: number;
   width?: number;
   height?: number;
+  texture: false | string;
+  textureType: number;
+  isTextureInvert: boolean;
+  isGradient: boolean;
+  cut: number;
   lengthAdjust: string;
-  textColor: string;
+  turbulenceFrequency: number;
   svgRef: React.RefObject<SVGSVGElement>;
 }
 
-export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, lengthAdjust, textColor }) => {
+export const Svg: React.FC<Props> = ({
+  text,
+  fontSize,
+  width,
+  height,
+  texture,
+  textureType,
+  isTextureInvert,
+  svgRef,
+  isGradient,
+  cut,
+  lengthAdjust,
+  turbulenceFrequency,
+}) => {
   const texts = text.split('\n');
   const svgWidth =
     width ||
@@ -25,6 +43,7 @@ export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, le
   // const svgHeight = height || 59;
   const svgHeight = height || fontSize * texts.length;
 
+  console.log(textureType);
   return (
     <svg
       className="Output"
@@ -36,8 +55,23 @@ export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, le
       viewBox={`0 0 ${svgWidth} ${svgHeight}`}
       enableBackground="new"
     >
-      <SvgDefs width={svgWidth} height={svgHeight} />
-      <SvgBody texts={texts} fontSize={fontSize} width={svgWidth} lengthAdjust={lengthAdjust} textColor={textColor} />
+      <SvgDefs
+        width={svgWidth}
+        height={svgHeight}
+        turbulenceFrequency={turbulenceFrequency}
+        cut={cut}
+        texture={texture}
+        textureType={textureType}
+        isTextureInvert={isTextureInvert}
+      />
+      <SvgBody
+        texts={texts}
+        fontSize={fontSize}
+        width={svgWidth}
+        isGradient={isGradient}
+        lengthAdjust={lengthAdjust}
+        texture={texture}
+      />
     </svg>
   );
 };
