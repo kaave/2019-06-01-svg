@@ -70,6 +70,7 @@
     "natives": "^1.1.6"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "date-fns": "^1.30.1",
     "dis-gui": "^2.1.0",
     "fontfaceobserver": "^2.1.0",
@@ -84,6 +85,7 @@
     "tslib": "^1.9.3"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/fontfaceobserver": "^0.0.6",
     "@types/jest": "^24.0.6",
     "@types/js-beautify": "^1.8.0",
