@@ -2,11 +2,11 @@
 
 import axios from 'axios';
 
-if (!('AudioContext' in window)) {
+if (!('AudioContext' in window) && !('webkitAudioContext' in window)) {
   throw new Error('Your browser does not support the Web Audio API');
 }
 
-if (!navigator.getUserMedia) {
+if (!navigator.mediaDevices.getUserMedia) {
   throw new Error('Your browser does not support the Media Stream API');
 }
 
@@ -55,41 +55,32 @@ export type IO = {
   setOnRAF: (cb: (analyser: AnalyserNode) => void) => void;
 };
 
+type AudioCtx = typeof AudioContext;
+const AC: AudioCtx = (window as any).AudioContext || (window as any).webkitAudioContext;
+
 class PitchShifter implements IO {
-  audioContext: AudioContext;
-
+  audioContext: AudioContext = new AC();
+  buffers: AudioBuffer[] = [];
   audioSources: (AudioBufferSourceNode | MediaStreamAudioSourceNode)[] = [];
-
+  audioSource?: AudioBufferSourceNode | MediaStreamAudioSourceNode;
   processor?: ScriptProcessorNode;
-
   spectrumAnalyser: AnalyserNode;
-
   audioSourceIndex = -1;
-
   pitchRatio = 1.0;
-
   playbackRatio = 1.0;
-
   overlapRatio = 0.5;
-
   grainSize = 512;
 
   delayTime = 0.5;
-
-  feedbackGain = 0.8;
-
-  cutoff = 1000;
-
+  feedbackGain = 0.4;
+  cutoff = 8000;
   delay: DelayNode;
-
   feedback: GainNode;
-
   filter: BiquadFilterNode;
 
   onRAF?: (analyser: AnalyserNode) => void;
 
   constructor({ sourceNames }: Props) {
-    this.audioContext = new AudioContext();
     this.delay = this.audioContext.createDelay();
     this.delay.delayTime.value = this.delayTime;
     this.feedback = this.audioContext.createGain();
@@ -101,12 +92,6 @@ class PitchShifter implements IO {
     this.filter.connect(this.delay);
     this.delay.connect(this.audioContext.destination);
 
-    navigator.getUserMedia(
-      { audio: true, video: false },
-      stream => (this.audioSources[sourceNames.length] = this.audioContext.createMediaStreamSource(stream)),
-      error => console.error(error),
-    );
-
     this.spectrumAnalyser = this.audioContext.createAnalyser();
     this.spectrumAnalyser.fftSize = 128;
     this.spectrumAnalyser.smoothingTimeConstant = 0.8;
@@ -114,6 +99,7 @@ class PitchShifter implements IO {
     const getBuffersPromise = getBuffers(this.audioContext, sourceNames);
     Promise.all(getBuffersPromise).then(buffers =>
       buffers.forEach((buffer, i) => {
+        this.buffers[i] = buffer;
         const bufferSource = this.audioContext.createBufferSource();
 
         bufferSource.buffer = buffer;
@@ -131,30 +117,46 @@ class PitchShifter implements IO {
     this.initProcessor();
   }
 
-  setAudioSourceIndex = (i: number) => {
-    const currentSource = this.audioSources[this.audioSourceIndex];
-    if (currentSource) {
-      currentSource.disconnect();
+  setAudioSourceIndex = async (i: number) => {
+    if (this.audioSource) {
+      this.audioSource.disconnect();
     }
 
-    this.audioSourceIndex = i;
+    if (i >= this.buffers.length) {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
+      this.audioSource = this.audioContext.createMediaStreamSource(stream);
 
-    const nextSource = this.audioSources[this.audioSourceIndex];
-    if (nextSource && this.processor) {
-      nextSource.connect(this.delay);
-      nextSource.connect(this.processor);
+      if (this.audioSource && this.processor) {
+        this.audioSource.connect(this.delay);
+        this.audioSource.connect(this.processor);
+      }
+    } else {
+      const bufferSource = this.audioContext.createBufferSource();
+
+      bufferSource.buffer = this.buffers[i];
+      bufferSource.loop = true;
+      if (this.processor) {
+        bufferSource.connect(this.processor);
+      }
+
+      bufferSource.start(0);
+      this.audioSource = bufferSource;
+
+      if (this.audioSource && this.processor) {
+        this.audioSource.connect(this.delay);
+        this.audioSource.connect(this.processor);
+      }
     }
   };
 
   setPitchRatio = (n: number) => (this.pitchRatio = n);
 
-  setPlaybackRatio = (n: number) =>
-    this.audioSources.forEach(bufferSource => {
-      if (bufferSource instanceof AudioBufferSourceNode) {
-        // eslint-disable-next-line no-param-reassign
-        bufferSource.playbackRate.value = n;
-      }
-    });
+  setPlaybackRatio = (n: number) => {
+    if (this.audioSource && this.audioSource instanceof AudioBufferSourceNode) {
+      // eslint-disable-next-line no-param-reassign
+      this.audioSource.playbackRate.value = n;
+    }
+  };
 
   setOverlapRatio = (n: number) => (this.overlapRatio = n);
 
@@ -162,8 +164,8 @@ class PitchShifter implements IO {
     this.grainSize = n;
     this.initProcessor();
 
-    if (this.audioSources[this.audioSourceIndex] && this.processor) {
-      this.audioSources[this.audioSourceIndex].connect(this.processor);
+    if (this.audioSource && this.processor) {
+      this.audioSource.connect(this.processor);
     }
   };
 
