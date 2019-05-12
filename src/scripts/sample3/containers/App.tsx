@@ -1,6 +1,7 @@
 import * as React from 'react';
 import * as dg from 'dis-gui';
 
+import { initializeWebMidi } from '../../modules/Midi';
 import * as Audio from '../../modules/Audio';
 import { Svg, Props as SvgProps } from '../components/Svg';
 
@@ -43,6 +44,72 @@ export const App: React.FC<{}> = () => {
         if (!gain) return;
         rect.setAttribute('transform', `scale(1, ${1 - gain / 256})`);
       });
+    });
+    initializeWebMidi(({ data: [, ch, value] }) => {
+      // eslint-disable-next-line yoda
+      if (ch < 21 || 28 < ch) return;
+
+      const normalizedValue = value / 127;
+      const knobIndex = ch - 21;
+      switch (knobIndex) {
+        case 0: {
+          const min = 0.5;
+          const max = 2;
+          const range = max - min;
+          const setValue = range * normalizedValue + min;
+          setPitchRatio(setValue);
+          audio.setPitchRatio(setValue);
+          break;
+        }
+        case 1: {
+          const min = 0;
+          const max = 5;
+          const range = max - min;
+          const setValue = range * normalizedValue + min;
+          setPlaybackRatio(setValue);
+          audio.setPlaybackRatio(setValue);
+          break;
+        }
+        case 2: {
+          const min = 0;
+          const max = 0.99;
+          const range = max - min;
+          const setValue = range * normalizedValue + min;
+          setOverlapRatio(setValue);
+          audio.setOverlapRatio(setValue);
+          break;
+        }
+        case 5: {
+          const min = 20;
+          const max = 1000;
+          const range = max - min;
+          const setValue = range * normalizedValue + min;
+          setDelayTime(setValue);
+          audio.setDelayTime(setValue / 1000);
+          break;
+        }
+        case 6: {
+          const min = 0;
+          const max = 1;
+          const range = max - min;
+          const setValue = range * normalizedValue + min;
+          setFeedbackGain(setValue);
+          audio.setFeedbackGain(setValue);
+          break;
+        }
+        case 7: {
+          const min = 0;
+          const max = 20000;
+          const range = max - min;
+          const setValue = range * normalizedValue + min;
+          setCutoff(setValue);
+          audio.setCutoff(setValue);
+          break;
+        }
+
+        default:
+          break;
+      }
     });
   }, []);
 
