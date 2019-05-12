@@ -4,6 +4,7 @@ export interface Props {
   texts: string[];
   fontSize: number;
   width: number;
+  height: number;
   lengthAdjust: string;
   textColor: string;
 }
@@ -21,9 +22,9 @@ const styles: React.CSSProperties = {};
 
 const noise = [['1,12', 1], ['0.8,8', 1], ['0.6,20', 1.5], ['1.6,52', 1.8], ['2.6,72', 1.8]];
 
-export const SvgBody: React.FC<Props> = ({ texts, fontSize, width, lengthAdjust, textColor }) => (
+export const SvgBody: React.FC<Props> = React.memo(({ texts, fontSize, width, height, lengthAdjust, textColor }) => (
   <g filter="url(#drop-shadow)">
-    <rect x="0" y="0" width="2000" height="2000" fill="#fff" />
+    <rect x="0" y="0" width={width} height={height} fill="#fff" />
     {noise.map(([strokeDasharray, strokeWidth]) => (
       <text
         fontSize={fontSize}
@@ -34,4 +35,4 @@ export const SvgBody: React.FC<Props> = ({ texts, fontSize, width, lengthAdjust,
       </text>
     ))}
   </g>
-);
+));

@@ -37,7 +37,14 @@ export const Svg: React.FC<Props> = ({ text, fontSize, height, width, svgRef, le
       enableBackground="new"
     >
       <SvgDefs width={svgWidth} height={svgHeight} />
-      <SvgBody texts={texts} fontSize={fontSize} width={svgWidth} lengthAdjust={lengthAdjust} textColor={textColor} />
+      <SvgBody
+        texts={texts}
+        fontSize={fontSize}
+        width={svgWidth}
+        height={svgHeight}
+        lengthAdjust={lengthAdjust}
+        textColor={textColor}
+      />
     </svg>
   );
 };
