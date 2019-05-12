@@ -11,6 +11,7 @@ const audioFiles = [
   'audios/apache.mp3',
   'audios/soulpride.mp3',
   'audios/tizianocrudeli.mp3',
+  'audios/ojisan.mp3',
 ];
 const audio = Audio.create({ sourceNames: audioFiles });
 const audioSources = ['none', ...audioFiles, 'microphone'];
@@ -32,8 +33,14 @@ export const App: React.FC<{}> = () => {
 
   React.useEffect(() => {
     audio.setOnRAF((node: AnalyserNode) => {
-      // spectrum analyser
       const tmpFrequencyData = new Uint8Array(node.frequencyBinCount);
+      node.getByteTimeDomainData(tmpFrequencyData);
+      const totalTimeData = tmpFrequencyData.reduce((total, n) => total + n, 0);
+      const amplitude = Math.abs(totalTimeData / tmpFrequencyData.length - 128) * 5 + 1;
+      const normalizedAmp = amplitude / 128; // あまめ
+      document.body.style.backgroundColor = `hsl(0, 0%, ${normalizedAmp * 100}%)`;
+
+      // spectrum analyser
       node.getByteFrequencyData(tmpFrequencyData);
       setFrequencyData(tmpFrequencyData);
 
