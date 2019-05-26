@@ -1,11 +1,25 @@
 <%
+const metaImage = 'https://2019-06-01-svg.netlify.com/ogp.jpg';
 const config = {
-    title: 'top',
-    description: 'This is top page',
+    title: 'SVG Typography ~ 汚し系に挑戦 | SVG & Web Audio API',
+    description: 'SVG Typography ~ 汚し系に挑戦 | SVG & Web Audio API @ Frontend Nagoya #10 のサンプル、参考資料をまとめたページです',
     styles: ['https://fonts.googleapis.com/css?family=Roboto+Condensed:700', '/css/index.css'],
-    scripts: [],
-    metaImage: 'https://dummyimage.com/600x400/333/ddd.png&text=Dummy+image'
+    scripts: [
+        'https://cdn.polyfill.io/v2/polyfill.js?features=default-3.4,IntersectionObserver',
+    ],
+    metaImage,
+    og: {
+        type: 'website',
+        image: metaImage,
+        url: 'https://2019-06-01-svg.netlify.com/',
+        siteName: 'SVG Typography ~ 汚し系に挑戦 | SVG & Web Audio API'
+    },
+    twitter: {
+        card: 'summary_large_image',
+        site: '@junkjunctions',
+    }
 };
+
 %>
 
 <%- include('./common/_head.ejs', { ...config }) %>
@@ -41,6 +55,12 @@ const config = {
         SVG Typography ~ 汚し系に挑戦 | SVG & Web Audio API<br>
         2019/6/1 @ Frontend Nagoya #10
     </h1>
+    <script
+      async
+      class="speakerdeck-embed"
+      data-id="6b856c7272524ec78f0ca803b4b471c6"
+      data-ratio="1.33333333333333"
+      src="//speakerdeck.com/assets/embed.js"></script>
     <section class="CreatedItems">
         <h2 class="CreatedItems__header">
             制作物
