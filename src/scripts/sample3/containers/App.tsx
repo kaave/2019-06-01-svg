@@ -5,14 +5,7 @@ import { initializeWebMidi } from '../../modules/Midi';
 import * as Audio from '../../modules/Audio';
 import { Svg, Props as SvgProps } from '../components/Svg';
 
-const audioFiles = [
-  'audios/amen.mp3',
-  'audios/think.mp3',
-  'audios/apache.mp3',
-  'audios/soulpride.mp3',
-  'audios/tizianocrudeli.mp3',
-  'audios/ojisan.mp3',
-];
+const audioFiles = ['audios/amen.mp3', 'audios/think.mp3', 'audios/apache.mp3', 'audios/soulpride.mp3'];
 const audio = Audio.create({ sourceNames: audioFiles });
 const audioSources = ['none', ...audioFiles, 'microphone'];
 const validGrainSizes = [256, 512, 1024, 2048, 4096, 8192].map(n => n.toString());
